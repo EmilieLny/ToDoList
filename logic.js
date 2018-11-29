@@ -1,4 +1,4 @@
-function render() {
+
     class App extends React.Component {
         render() {
             return (
@@ -14,7 +14,7 @@ function render() {
             return (
                 <div className="navbar">
                     <h1>JUST DO IT</h1>
-                    <img src="https://image.flaticon.com/icons/svg/273/273504.svg" alt="logo" />
+                    <img src="./images/logo.png" alt="logo" />
                 </div>
             );
         }
@@ -30,7 +30,7 @@ function render() {
 
 
 
-
+function render() {
     ReactDOM.render(
         <App />,
         document.getElementById("root")
