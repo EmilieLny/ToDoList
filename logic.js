@@ -1,3 +1,11 @@
+function render() {
+    ReactDOM.render(
+        <App />,
+        document.getElementById("root")
+    );
+}
+render();
+
 
 class App extends React.Component {
     render() {
@@ -116,10 +124,3 @@ class ListItem extends React.Component {
     }
 }
 
-function render() {
-    ReactDOM.render(
-        <App />,
-        document.getElementById("root")
-    );
-}
-render();
