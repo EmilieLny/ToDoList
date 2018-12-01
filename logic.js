@@ -1,18 +1,9 @@
-function render() {
-    ReactDOM.render(
-        <App />,
-        document.getElementById("root")
-    );
-}
-render();
-
-
 class App extends React.Component {
     render() {
         return (
             <div>
-                <NavBar />
-                <Board />
+                <NavBar/>
+                <Board/>
             </div>
         );
     }
@@ -31,7 +22,7 @@ class Board extends React.Component {
     render() {
         return (
             <div className="board">
-                <CreateNewListInputBar />
+                <CreateNewListInputBar/>
             </div>
         );
     }
@@ -46,8 +37,8 @@ class CreateNewListInputBar extends React.Component {
                         <input className="titleInput" placeholder="Enter Title..." type="text"></input>
                         <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
                     </div>
-                    <ListItem />
-                    <BottomToolBar />
+                    <ListItem/>
+                    <BottomToolBar/>
                 </div>
             </div>
         );
@@ -62,6 +53,7 @@ class BottomToolBar extends React.Component {
             top: 0
         }
         this.showHoverDetail = this.showHoverDetail.bind(this);
+        this.turnOffHover = this.turnOffHover.bind(this);
     }
 
     showHoverDetail(e) {
@@ -124,3 +116,12 @@ class ListItem extends React.Component {
     }
 }
 
+
+
+function render() {
+    ReactDOM.render(
+        <App />,
+        document.getElementById("root")
+    );
+}
+render();
