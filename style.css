@@ -2,10 +2,137 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    color: #57606f;
+}
+/* NAVBAR */
+.navbar {
+    height: 60px;
+    padding: 10px 10%;
+    background-color: #f1f2f6;
+    box-shadow: 0 0 5px black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar img {
+    height: 100%;
+}
+.navbar h1 {
+    font-size: 20px;
+    letter-spacing: 1px;
 }
 
-.navbar {
+/* BOARD */
+.board {
+    width: 100vw;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+}
+
+/* CREATE NEW LIST CONTAINER */
+.topBarBlockContainer{
     width: 100%;
-    height: 70px;
-    background-color: antiquewhite;
+}
+.createNewListInputBar{
+    margin: 1.5% auto 0;
+    width: 70%;
+    background-color: white;
+    box-shadow: 1px 1px 5px 1px black;
+}
+.top-Title-Row{
+    width: 100%;
+    height: 40px; /* needs to remain fixed even in mobile*/
+    display: flex;
+    flex-direction: row;
+    border-bottom: #57606f solid thin;
+    margin-bottom: 1%;
+}
+.titleInput{
+    width: 95%;
+    font-size: 1.5em;
+    border: none;
+    margin-left: 0.5%;
+}
+.pinIconContainer{
+    margin-left: 1%;
+    font-size: 1.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.listItemContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 2%;
+    border-bottom: #57606f solid thin;
+}
+.plusIconContainer{
+    margin: 0 0 0 1%;
+    font-size: 1.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+}
+.listItemInput{
+    width: 91%;
+    margin-left: 1%;
+    font-size: 1.1em;
+    border: none;
+}
+.editIconContainer{
+    margin: 0 0 0 1%;
+    font-size: 1.3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+}
+.bottomToolBarContainer{
+    width: 100%;
+    padding-top: 15px;
+    height: 30px; /* needs to remain fixed even in mobile*/
+
+}
+.ToolsCotnainter{
+    padding: 0;
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+}
+.ToolsCotnainter li{
+    margin-left: 2.5%;
+    font-size: 1.2em;
+    list-style-type: none;
+}
+.hoverDetail{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: auto;
+    padding: 0 3px;
+    height: 24px;
+    background-color: #57606f;
+    color: white;
+    border-radius: 10px;
+    font-size: 0.7em;
+    text-align: center;
+    padding-top: 0.5%;
+}
+@media only screen and (max-width: 835px) {
+    .titleInput{
+        width: 92%;
+    }
+    .pinIconContainer{
+        margin-left: 0%;
+    }
+    .listItemInput{
+        width: 85%;
+    }
 }
