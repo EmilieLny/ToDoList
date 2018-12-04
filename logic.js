@@ -44,6 +44,21 @@ class CreateNewListInputBar extends React.Component {
         );
     }
 }
+class ListItem extends React.Component {
+    render() {
+        return (
+            <div className="listItemContainer">
+                <div className="plusIconContainer">
+                    <i className="fas fa-plus-circle"></i>
+                </div>
+                <input className="listItemInput" placeholder="List item" type="text"></input>
+                <div className="editIconContainer">
+                    <i className="fas fa-edit"></i>
+                </div>
+            </div>
+        );
+    }
+}
 
 class BottomToolBar extends React.Component {
     constructor(props) {
@@ -100,21 +115,7 @@ class BottomToolBar extends React.Component {
     }
 }
 
-class ListItem extends React.Component {
-    render() {
-        return (
-            <div className="listItemContainer">
-                <div className="plusIconContainer">
-                    <i className="fas fa-plus-circle"></i>
-                </div>
-                <input className="listItemInput" placeholder="List item" type="text"></input>
-                <div className="editIconContainer">
-                    <i className="fas fa-edit"></i>
-                </div>
-            </div>
-        );
-    }
-}
+
 
 
 
