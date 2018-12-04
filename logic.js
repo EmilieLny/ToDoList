@@ -70,7 +70,7 @@ class CreateNewList extends React.Component {
     }
 
     render() {
-        var listItems = this.state.arrayItems.map( x => <li key={x}>{x}</li>)
+        var listItems = this.state.arrayItems.map( x => <Item text={x}></Item>)
         var style = {
             left: this.state.left + "px",
             top: this.state.top + "px"
@@ -117,9 +117,20 @@ class CreateNewList extends React.Component {
     }
 }
 
-
-
-
+class Item extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            //
+        }
+        
+    }
+    render(){
+        return(
+            <li>{this.props.text}</li>
+        );
+    }
+}
 
 function render() {
     ReactDOM.render(
