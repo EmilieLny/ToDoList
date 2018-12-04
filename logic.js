@@ -2,8 +2,8 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <NavBar/>
-                <Board/>
+                <NavBar />
+                <Board />
             </div>
         );
     }
@@ -22,55 +22,24 @@ class Board extends React.Component {
     render() {
         return (
             <div className="board">
-                <CreateNewListInputBar/>
+                <CreateNewList />
             </div>
         );
     }
 }
 
-class CreateNewListInputBar extends React.Component {
-    render() {
-        return (
-            <div className="topBarBlockContainer">
-                <div className="createNewListInputBar">
-                    <div className="top-Title-Row">
-                        <input className="titleInput" placeholder="Enter Title..." type="text"></input>
-                        <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
-                    </div>
-                    <ListItem/>
-                    <BottomToolBar/>
-                </div>
-            </div>
-        );
-    }
-}
-class ListItem extends React.Component {
-    render() {
-        return (
-            <div className="listItemContainer">
-                <div className="plusIconContainer">
-                    <i className="fas fa-plus-circle"></i>
-                </div>
-                <input className="listItemInput" placeholder="List item" type="text"></input>
-                <div className="editIconContainer">
-                    <i className="fas fa-edit"></i>
-                </div>
-            </div>
-        );
-    }
-}
-
-class BottomToolBar extends React.Component {
+class CreateNewList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             left: 0,
-            top: 0
+            top: 0,
+            arrayItems : [],
         }
         this.showHoverDetail = this.showHoverDetail.bind(this);
         this.turnOffHover = this.turnOffHover.bind(this);
+        this.itemToArray = this.itemToArray.bind(this);
     }
-
     showHoverDetail(e) {
         console.log(e.target.nextSibling); //dont foget to remove this
         e.target.nextSibling.style.display = "block";
@@ -87,29 +56,62 @@ class BottomToolBar extends React.Component {
         console.log(e.target.nextSibling)
         e.target.nextSibling.style.display = "none";
     }
+    itemToArray(e){
+        if(e.keyCode == 13){
+            var arr = this.state.arrayItems
+            var toDo = this.textItem.value
+            arr.push(toDo)
+            this.setState({
+                arrayItems: arr,
+            })
+            console.log(arr)
+            this.textItem.value = ''
+        }  
+    }
+
     render() {
+        var listItems = this.state.arrayItems.map( x => <li key={x}>{x}</li>)
         var style = {
             left: this.state.left + "px",
             top: this.state.top + "px"
         };
-
         return (
-            <div className="bottomToolBarContainer">
-                <ul className="ToolsCotnainter">
-                    <li ><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-bell"></i>
-                        <div style={style} className="hoverDetail">Remind Me
+            <div className="topBarBlockContainer">
+                <div className="createNewListInputBar">
+                    <div className="top-Title-Row">
+                        <input className="titleInput" placeholder="Enter Title..." type="text"></input>
+                        <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
+                    </div>
+                    <div className="listItemContainer">
+                        <div className="plusIconContainer">
+                            <i className="fas fa-plus-circle"></i>
                         </div>
-                    </li>
-                    <li><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-share-square"></i>
-                        <div style={style} className="hoverDetail">Share
+                        <input ref={(input) => { this.textItem = input; }} onKeyUp={this.itemToArray} className="listItemInput" placeholder="List item" type="text"></input>
+                        <div className="editIconContainer">
+                            <i className="fas fa-edit"></i>
                         </div>
-                    </li>
-                    <li><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-palette"></i>
-                        <div style={style} className="hoverDetail">Choose color
+                    </div>
+                    <ul>
+                        {listItems}
+                    </ul>
+                    <div className="bottomToolBarContainer">
+                        <ul className="ToolsConatinter">
+                            <li ><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-bell"></i>
+                                <div style={style} className="hoverDetail">Remind Me
                         </div>
-                    </li>
-                </ul>
+                            </li>
+                            <li><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-share-square"></i>
+                                <div style={style} className="hoverDetail">Share
+                        </div>
+                            </li>
+                            <li><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-palette"></i>
+                                <div style={style} className="hoverDetail">Choose color
+                        </div>
+                            </li>
+                        </ul>
 
+                    </div>
+                </div>
             </div>
         );
     }

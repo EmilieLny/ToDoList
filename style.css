@@ -100,7 +100,7 @@ body {
     height: 30px; /* needs to remain fixed even in mobile*/
 
 }
-.ToolsCotnainter{
+.ToolsConatinter{
     padding: 0;
     width: 100%;
     margin: 0 auto;
@@ -108,7 +108,7 @@ body {
     display: flex;
     flex-direction: row;
 }
-.ToolsCotnainter li{
+.ToolsConatinter li{
     margin-left: 2.5%;
     font-size: 1.2em;
     list-style-type: none;
