@@ -35,10 +35,13 @@ class CreateNewList extends React.Component {
             left: 0,
             top: 0,
             arrayItems: [],
+            arrayDoneItems: [],
         }
         this.showHoverDetail = this.showHoverDetail.bind(this);
         this.turnOffHover = this.turnOffHover.bind(this);
         this.itemToArray = this.itemToArray.bind(this);
+        this.addToDoneList = this.addToDoneList.bind(this);
+        this.returnToToDoList = this.returnToToDoList.bind(this);
     }
     showHoverDetail(e) {
         e.target.nextSibling.style.display = "block";
@@ -52,8 +55,8 @@ class CreateNewList extends React.Component {
     turnOffHover(e) {
         e.target.nextSibling.style.display = "none";
     }
-
     itemToArray(e) {
+        console.log('itemToArray')
         if (e.keyCode == 13) {
             var arr = this.state.arrayItems
             var toDo = this.textItem.value
@@ -61,13 +64,63 @@ class CreateNewList extends React.Component {
             this.setState({
                 arrayItems: arr,
             })
-            console.log(arr)
             this.textItem.value = ''
+        }
+        console.log('TO DO ARRAY')
+        console.log(this.state.arrayItems)
+        console.log('DONE ARRAY')
+        console.log(this.state.arrayDoneItems)
+    }
+    addToDoneList(e) {
+        console.log('addToDoneList')
+        if (e.target.checked) {
+            var arrDone = this.state.arrayDoneItems
+            var done = e.target.nextSibling.value
+            arrDone.push(done)
+            this.setState({
+                arrayDoneItems: arrDone,
+            })
+
+            var index = this.state.arrayItems.indexOf(e.target.nextSibling.value);
+            if (index > -1) {
+                var newArray = this.state.arrayItems.splice(index, 1);/// BUUUUUUG
+                console.log('newArray :') /// BUUUUUUG
+                console.log(newArray)/// BUUUUUUG
+                this.setState({/// BUUUUUUG
+                    arrayItems: newArray/// BUUUUUUG
+                })
+            }
+            console.log('TO DO ARRAY')
+            console.log(this.state.arrayItems)
+            console.log('DONE ARRAY')
+            console.log(this.state.arrayDoneItems)
+        }
+    }
+    returnToToDoList(e) {
+        console.log('returnToToDoList')
+        if (e.target.checked) {
+            var arrToDo = this.state.arrayItems
+            var toDo = e.target.nextSibling.value
+            arrToDo.push(toDo)
+            this.setState({
+                arrayItems: arrToDo,
+            })
+
+            var index = this.state.arrayDoneItems.indexOf(e.target.nextSibling.value);/// BUUUUUUG
+            if (index > -1) {/// BUUUUUUG
+                this.state.arrayDoneItems.splice(index, 1);/// BUUUUUUG
+            }/// BUUUUUUG
+            console.log('TO DO ARRAY')
+            console.log(this.state.arrayItems)
+            console.log('DONE ARRAY')
+            console.log(this.state.arrayDoneItems)
         }
     }
 
     render() {
-        var listItems = this.state.arrayItems.map(x => <Item text={x} function={this.itemToArray}></Item>)
+        console.log('Im in the render')
+        var listItems = this.state.arrayItems.map(x => <Item handleClick={this.addToDoneList} text={x} function={this.itemToArray}></Item>)
+        var listDoneItems = this.state.arrayDoneItems.map(x => <Item handleClick={this.returnToToDoList} text={x}></Item>)
         var style = {
             left: this.state.left + "px",
             top: this.state.top + "px"
@@ -88,8 +141,14 @@ class CreateNewList extends React.Component {
                             <i className="fas fa-edit"></i>
                         </div>
                     </div>
+
                     <ul>
                         {listItems}
+                    </ul>
+
+                    <ul>
+                        <p> DONE LIST ---------------------</p>
+                        {listDoneItems}
                     </ul>
                     <div className="bottomToolBarContainer">
                         <ul className="ToolsConatinter">
@@ -123,10 +182,8 @@ class Item extends React.Component {
         this.showHoverItem = this.showHoverItem.bind(this)
         this.hideHoverItem = this.hideHoverItem.bind(this)
         this.changeInput = this.changeInput.bind(this)
-
     }
     changeInput(e) {
-        console.log(e.keyCode)
         if (e.keyCode == 8) {
             var newText = e.target.value.slice(0, -1)
             this.setState({
@@ -137,12 +194,11 @@ class Item extends React.Component {
             this.setState({
                 inputValue: newText
             })
-        } else if(e.keyCode == 13) {
+        } else if (e.keyCode == 13) {
             this.props.function(e)
         }
     }
     showHoverItem(e) {
-        console.log(this.deletIcon.style)
         this.deletIcon.style.display = 'block'
     }
     hideHoverItem(e) {
@@ -152,16 +208,17 @@ class Item extends React.Component {
         return (
             <li className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
                 <span>
-                    <input type='checkbox' />
+                    <input type='checkbox' onClick={this.props.handleClick} />
                     <input type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
                 </span>
-                <span className="iconesItem" ref={(input) => {this.deletIcon = input; }}>
+                <span className="iconesItem" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
                 </span>
             </li>
         );
     }
 }
+
 
 function render() {
     ReactDOM.render(
