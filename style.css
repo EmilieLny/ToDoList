@@ -127,6 +127,32 @@ body {
     text-align: center;
     padding-top: 0.5%;
 }
+
+/* ITEM COMPONENT */
+ul {
+    padding: 0 1%;
+}
+li.item {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+li .iconesItem {
+    display: none;
+}
+li .iconesItem i{
+    margin: 0 .8em;
+}
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 835px) {
     .titleInput{
         width: 92%;

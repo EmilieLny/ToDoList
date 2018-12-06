@@ -34,30 +34,27 @@ class CreateNewList extends React.Component {
         this.state = {
             left: 0,
             top: 0,
-            arrayItems : [],
+            arrayItems: [],
         }
         this.showHoverDetail = this.showHoverDetail.bind(this);
         this.turnOffHover = this.turnOffHover.bind(this);
         this.itemToArray = this.itemToArray.bind(this);
     }
     showHoverDetail(e) {
-        console.log(e.target.nextSibling); //dont foget to remove this
         e.target.nextSibling.style.display = "block";
         var left = e.clientX;
-        console.log(left); //dont foget to remove this
         var top = e.clientY;
-        console.log(top); //dont foget to remove this
         this.setState({
             left: left,
             top: top
         });
     }
     turnOffHover(e) {
-        console.log(e.target.nextSibling)
         e.target.nextSibling.style.display = "none";
     }
-    itemToArray(e){
-        if(e.keyCode == 13){
+
+    itemToArray(e) {
+        if (e.keyCode == 13) {
             var arr = this.state.arrayItems
             var toDo = this.textItem.value
             arr.push(toDo)
@@ -66,11 +63,11 @@ class CreateNewList extends React.Component {
             })
             console.log(arr)
             this.textItem.value = ''
-        }  
+        }
     }
 
     render() {
-        var listItems = this.state.arrayItems.map( x => <Item text={x}></Item>)
+        var listItems = this.state.arrayItems.map(x => <Item text={x} function={this.itemToArray}></Item>)
         var style = {
             left: this.state.left + "px",
             top: this.state.top + "px"
@@ -121,13 +118,46 @@ class Item extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //
+            inputValue: this.props.text
         }
-        
+        this.showHoverItem = this.showHoverItem.bind(this)
+        this.hideHoverItem = this.hideHoverItem.bind(this)
+        this.changeInput = this.changeInput.bind(this)
+
     }
-    render(){
-        return(
-            <li>{this.props.text}</li>
+    changeInput(e) {
+        console.log(e.keyCode)
+        if (e.keyCode == 8) {
+            var newText = e.target.value.slice(0, -1)
+            this.setState({
+                inputValue: newText
+            })
+        } else if (e.keyCode > 47 && e.keyCode < 90 || e.keyCode == 32) {
+            var newText = e.target.value + e.key
+            this.setState({
+                inputValue: newText
+            })
+        } else if(e.keyCode == 13) {
+            this.props.function(e)
+        }
+    }
+    showHoverItem(e) {
+        e.target.children[1].style.display = 'block'
+    }
+    hideHoverItem(e) {
+        e.target.children[1].style.display = 'none'
+    }
+    render() {
+        return (
+            <li className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
+                <span>
+                    <input type='checkbox' />
+                    <input type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
+                </span>
+                <span className="iconesItem">
+                    <i className="far fa-trash-alt"></i>
+                </span>
+            </li>
         );
     }
 }
