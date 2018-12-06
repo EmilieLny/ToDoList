@@ -120,7 +120,7 @@ class CreateNewList extends React.Component {
     render() {
         console.log('Im in the render')
         var listItems = this.state.arrayItems.map(x => <Item handleClick={this.addToDoneList} text={x} function={this.itemToArray}></Item>)
-        var listDoneItems = this.state.arrayDoneItems.map(x => <Item handleClick={this.returnToToDoList} text={x}></Item>)
+        var listDoneItems = this.state.arrayDoneItems.map(x => <s><Item handleClick={this.returnToToDoList} text={x}></Item></s>)
         var style = {
             left: this.state.left + "px",
             top: this.state.top + "px"
@@ -146,8 +146,8 @@ class CreateNewList extends React.Component {
                         {listItems}
                     </ul>
 
-                    <ul>
-                        <p> DONE LIST ---------------------</p>
+                    <ul className="doneList">
+                        <p><i className="far fa-check-circle"></i> Done List</p>
                         {listDoneItems}
                     </ul>
                     <div className="bottomToolBarContainer">

@@ -144,6 +144,15 @@ li .iconesItem i{
     margin: 0 .8em;
 }
 
+.doneList {
+    border-top: 1px solid #57606f;
+    border-radius: 5px;
+    background: #eef9f2;
+    padding: 5px;
+}
+.doneList p{
+    margin: 12px;
+}
 
 
 
