@@ -118,7 +118,7 @@ class Item extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputValue: this.props.text
+            inputValue: this.props.text,
         }
         this.showHoverItem = this.showHoverItem.bind(this)
         this.hideHoverItem = this.hideHoverItem.bind(this)
@@ -142,10 +142,11 @@ class Item extends React.Component {
         }
     }
     showHoverItem(e) {
-        e.target.children[1].style.display = 'block'
+        console.log(this.deletIcon.style)
+        this.deletIcon.style.display = 'block'
     }
     hideHoverItem(e) {
-        e.target.children[1].style.display = 'none'
+        this.deletIcon.style.display = 'none'
     }
     render() {
         return (
@@ -154,8 +155,8 @@ class Item extends React.Component {
                     <input type='checkbox' />
                     <input type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
                 </span>
-                <span className="iconesItem">
-                    <i className="far fa-trash-alt"></i>
+                <span className="iconesItem" ref={(input) => {this.deletIcon = input; }}>
+                    <i className="far fa-trash-alt" ></i>
                 </span>
             </li>
         );
