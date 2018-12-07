@@ -63,6 +63,7 @@ class CreateNewList extends React.Component {
             if (this.textItem.value !== "") {
                 var newItem = {
                     text: this.textItem.value,
+                    isChecked: false,
                     key: Date.now(),
                     switchListFunction: this.addToDoneList,
                     deleteFunction: this.deleteItemToDo
@@ -88,6 +89,7 @@ class CreateNewList extends React.Component {
                 newArray.push(oldArray[i]);
             }else if(doneItem==oldArray[i].key){
                 oldArray[i].switchListFunction= this.returnToToDoList;
+                oldArray[i].isChecked= true;
                 oldArray[i].deleteFunction= this.deleteItemDone;
                 doneListNewArr.push(oldArray[i]);
             }
@@ -111,6 +113,7 @@ class CreateNewList extends React.Component {
                 
             }else if(doneItem==oldArray[i].key){
                 oldArray[i].switchListFunction= this.addToDoneList;
+                oldArray[i].isChecked= false;
                 oldArray[i].deleteFunction= this.deleteItemToDo;
                 toDoListNewArr.push(oldArray[i]);
             }
@@ -205,7 +208,7 @@ class ToDoItems extends React.Component {
     
     createTasks(item) {
         return (
-            <Item trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -229,7 +232,7 @@ class DoneItems extends React.Component {
     
     createTasks(item) {
         return (
-            <Item trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -279,7 +282,7 @@ class Item extends React.Component {
         return (
             <li  className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
                 <span>
-                    <input type='checkbox' onClick={this.props.handleClick} />
+                    <input checked={this.props.isChecked} type='checkbox' onClick={this.props.handleClick} />
                     <input data={this.props.data} type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
                 </span>
                 <span onClick={this.props.trashHandleClick} className="iconesItem" ref={(input) => { this.deletIcon = input; }}>
