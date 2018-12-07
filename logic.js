@@ -75,14 +75,14 @@ class CreateNewList extends React.Component {
     }
     addToDoneList(e) {
         var oldArray = this.state.arrayItems;
-        var doneItem = e.target.nextSibling.value
+        var doneItem = e.target.nextSibling.getAttribute("data");
         var newArray = [];
         var doneListNewArr = this.state.arrayDoneItems;
         
         for(var i=0;i<oldArray.length; i++){
-            if(doneItem!==oldArray[i].text){
+            if(doneItem!=oldArray[i].key){
                 newArray.push(oldArray[i]);
-            }else if(doneItem==oldArray[i].text){
+            }else if(doneItem==oldArray[i].key){
                 oldArray[i].switchListFunction= this.returnToToDoList;
                 doneListNewArr.push(oldArray[i]);
             }
@@ -95,13 +95,15 @@ class CreateNewList extends React.Component {
     }
     returnToToDoList(e) {
         var oldArray = this.state.arrayDoneItems;
-        var doneItem = e.target.nextSibling.value;
+        var doneItem = e.target.nextSibling.getAttribute("data");
         var newArray = [];
         var toDoListNewArr = this.state.arrayItems;
+        
         for(var i=0;i<oldArray.length; i++){
-            if(doneItem!==oldArray[i].text){
+            if(doneItem!=oldArray[i].key){
                 newArray.push(oldArray[i]);
-            }else if(doneItem==oldArray[i].text){
+                
+            }else if(doneItem==oldArray[i].key){
                 oldArray[i].switchListFunction= this.addToDoneList;
                 toDoListNewArr.push(oldArray[i]);
             }
@@ -167,7 +169,7 @@ class ToDoItems extends React.Component {
     
     createTasks(item) {
         return (
-            <Item handleClick={item.switchListFunction} key={item.key} text={item.text} />
+            <Item handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -191,7 +193,7 @@ class DoneItems extends React.Component {
     
     createTasks(item) {
         return (
-            <Item handleClick={item.switchListFunction} key={item.key} text={item.text} />
+            <Item handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -239,10 +241,10 @@ class Item extends React.Component {
     }
     render() {
         return (
-            <li key={this.props.key} className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
+            <li  className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
                 <span>
                     <input type='checkbox' onClick={this.props.handleClick} />
-                    <input type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
+                    <input data={this.props.data} type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
                 </span>
                 <span onClick={this.props.handleClick} className="iconesItem" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
