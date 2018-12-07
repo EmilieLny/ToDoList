@@ -43,6 +43,8 @@ class CreateNewList extends React.Component {
         this.itemToArray = this.itemToArray.bind(this);
         this.addToDoneList = this.addToDoneList.bind(this);
         this.returnToToDoList = this.returnToToDoList.bind(this);
+        this.deleteItemDone = this.deleteItemDone.bind(this);
+        this.deleteItemToDo = this.deleteItemToDo.bind(this);
     }
     showHoverDetail(e) {
         e.target.nextSibling.style.display = "block";
@@ -62,7 +64,8 @@ class CreateNewList extends React.Component {
                 var newItem = {
                     text: this.textItem.value,
                     key: Date.now(),
-                    switchListFunction: this.addToDoneList
+                    switchListFunction: this.addToDoneList,
+                    deleteFunction: this.deleteItemToDo
                 };
                 this.setState((prevState) => {
                     return {
@@ -85,6 +88,7 @@ class CreateNewList extends React.Component {
                 newArray.push(oldArray[i]);
             }else if(doneItem==oldArray[i].key){
                 oldArray[i].switchListFunction= this.returnToToDoList;
+                oldArray[i].deleteFunction= this.deleteItemDone;
                 doneListNewArr.push(oldArray[i]);
             }
         }
@@ -107,12 +111,41 @@ class CreateNewList extends React.Component {
                 
             }else if(doneItem==oldArray[i].key){
                 oldArray[i].switchListFunction= this.addToDoneList;
+                oldArray[i].deleteFunction= this.deleteItemToDo;
                 toDoListNewArr.push(oldArray[i]);
             }
         }
         this.setState({
             arrayItems: toDoListNewArr,
             arrayDoneItems: newArray
+        })
+    }
+
+    deleteItemDone(e) {
+        var oldArray = this.state.arrayDoneItems;
+        var deleteItem = e.target.parentElement.previousSibling.children[1].getAttribute("data");
+        var newArray = [];
+        for(var i=0;i<oldArray.length; i++){
+            if(deleteItem!=oldArray[i].key){
+                newArray.push(oldArray[i]);
+            }
+        }
+        this.setState({
+            arrayDoneItems: newArray
+        })
+    }
+
+    deleteItemToDo(e) {
+        var oldArray = this.state.arrayItems;
+        var deleteItem = e.target.parentElement.previousSibling.children[1].getAttribute("data");
+        var newArray = [];
+        for(var i=0;i<oldArray.length; i++){
+            if(deleteItem!=oldArray[i].key){
+                newArray.push(oldArray[i]);
+            }
+        }
+        this.setState({
+            arrayItems: newArray
         })
     }
 
@@ -172,7 +205,7 @@ class ToDoItems extends React.Component {
     
     createTasks(item) {
         return (
-            <Item handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -196,7 +229,7 @@ class DoneItems extends React.Component {
     
     createTasks(item) {
         return (
-            <Item handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -249,7 +282,7 @@ class Item extends React.Component {
                     <input type='checkbox' onClick={this.props.handleClick} />
                     <input data={this.props.data} type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
                 </span>
-                <span onClick={this.props.handleClick} className="iconesItem" ref={(input) => { this.deletIcon = input; }}>
+                <span onClick={this.props.trashHandleClick} className="iconesItem" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
                 </span>
             </li>
