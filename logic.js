@@ -36,6 +36,7 @@ class CreateNewList extends React.Component {
             top: 0,
             arrayItems: [],
             arrayDoneItems: [],
+            somethingIsDone : false,
         }
         this.showHoverDetail = this.showHoverDetail.bind(this);
         this.turnOffHover = this.turnOffHover.bind(this);
@@ -89,7 +90,8 @@ class CreateNewList extends React.Component {
         }
         this.setState({
             arrayItems: newArray,
-            arrayDoneItems: doneListNewArr
+            arrayDoneItems: doneListNewArr,
+            somethingIsDone : true,
         })
 
     }
@@ -119,25 +121,26 @@ class CreateNewList extends React.Component {
             left: this.state.left + "px",
             top: this.state.top + "px"
         };
+        var somethingIsDone = this.state.somethingIsDone ? <div className='doneList'><p><i className="far fa-check-circle"></i> List of Completed tasks</p><DoneItems entries={this.state.arrayDoneItems} /></div> : null;
         return (
             <div className="topBarBlockContainer">
                 <div className="createNewListInputBar">
                     <div className="top-Title-Row">
-                        <input className="titleInput" placeholder="Enter Title..." type="text"></input>
+                        <input className="titleInput" placeholder="Title" type="text"></input>
                         <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
                     </div>
                     <div className="listItemContainer">
                         <div className="plusIconContainer">
-                            <i className="fas fa-plus-circle"></i>
+                        <i className="fas fa-plus"></i>
                         </div>
                         <input ref={(input) => { this.textItem = input; }} onKeyUp={this.itemToArray} className="listItemInput" placeholder="List item" type="text"></input>
-                        <div className="editIconContainer">
+                        {/* <div className="editIconContainer">
                             <i className="fas fa-edit"></i>
-                        </div>
+                        </div> */}
                     </div>
                     <ToDoItems entries={this.state.arrayItems} />
-                    <p>List of Completed tasks</p>
-                    <DoneItems entries={this.state.arrayDoneItems} />
+                    {somethingIsDone}
+                    
                     <div className="bottomToolBarContainer">
                         <ul className="ToolsConatinter">
                             <li ><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-bell"></i>

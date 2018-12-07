@@ -143,15 +143,32 @@ li .iconesItem {
 li .iconesItem i{
     margin: 0 .8em;
 }
+.toDoListItems input[type='text']{
+    width: 50em;
+    font-size: 1em;
+    color: #57606f;
+    padding: 3px;
+}
 
 .doneList {
     border-top: 1px solid #57606f;
     border-radius: 5px;
-    background: #eef9f2;
+    background-image: linear-gradient(#eef9f2, white);
     padding: 5px;
 }
 .doneList p{
     margin: 12px;
+}
+.doneList ul {
+    padding: 0 4%;
+}
+.doneList input[type='text']{
+    width: 50em;
+    font-size: 0.8em;
+    color: #57606f;
+    padding: 3px;
+    background: #ffffff9e;
+    border: 1px solid #d8dade;
 }
 
 
