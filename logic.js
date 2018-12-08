@@ -73,7 +73,8 @@ class CreateNewList extends React.Component {
                     isChecked: false,
                     key: Date.now(),
                     switchListFunction: this.addToDoneList,
-                    deleteFunction: this.deleteItemToDo
+                    deleteFunction: this.deleteItemToDo,
+
                 };
                 this.setState((prevState) => {
                     return {
@@ -198,11 +199,7 @@ class CreateNewList extends React.Component {
                 gradientFillFirst: "#eef9f2",
                 gradientFillSecond: "white"
             })
-<<<<<<< HEAD
         } else if (this.themePicker.value === "pink") {
-=======
-        } else if (this.themePicker.value === "red") {
->>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
             this.setState({
                 themecolor: "#ffb5bb",
                 themeFontColor: "#57606f",
@@ -216,33 +213,21 @@ class CreateNewList extends React.Component {
                 gradientFillFirst: "white",
                 gradientFillSecond: "#ffaf90"
             })
-<<<<<<< HEAD
         } else if (this.themePicker.value === "blue") {
-=======
-        } else if (this.themePicker.value === "purple") {
->>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
             this.setState({
                 themecolor: "#b5cfff",
                 themeFontColor: "#57606f",
                 gradientFillFirst: "white",
                 gradientFillSecond: "#b5cfff"
             })
-<<<<<<< HEAD
         } else if (this.themePicker.value === "green") {
-=======
-        } else if (this.themePicker.value === "blue") {
->>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
             this.setState({
                 themecolor: "#e1f5e8",
                 themeFontColor: "#57606f",
                 gradientFillFirst: "white",
                 gradientFillSecond: "#e1f5e8"
             })
-<<<<<<< HEAD
         } else if (this.themePicker.value === "gray") {
-=======
-        } else if (this.themePicker.value === "black") {
->>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
             this.setState({
                 themecolor: "#c7c7c7",
                 themeFontColor: "white",
@@ -266,11 +251,7 @@ class CreateNewList extends React.Component {
 
         };
         var gradientFillDoneList = {
-<<<<<<< HEAD
             backgroundImage: `linear-gradient(${this.state.gradientFillFirst}, ${this.state.gradientFillSecond})`
-=======
-            backgroundImage: `linear-gradient(${this.state.gradientFill}, white)`
->>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
         }
         var somethingIsDone = this.state.somethingIsDone ? <div style={gradientFillDoneList} className='doneList'><p><i className="far fa-check-circle"></i> List of Completed tasks</p><DoneItems entries={this.state.arrayDoneItems} /></div> : null;
         return (
@@ -281,11 +262,7 @@ class CreateNewList extends React.Component {
                         <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
                     </div>
                     <div className="listItemContainer">
-<<<<<<< HEAD
-                        <div className="plusIconContainer">
-=======
                         <div onClick={this.itemToArrayClick} className="plusIconContainer">
->>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
                             <i className="fas fa-plus"></i>
                         </div>
                         <input ref={(input) => { this.textItem = input; }} onKeyUp={this.itemToArray} className="listItemInput" placeholder="List item" type="text"></input>
@@ -382,6 +359,8 @@ class Item extends React.Component {
         this.showHoverItem = this.showHoverItem.bind(this)
         this.hideHoverItem = this.hideHoverItem.bind(this)
         this.changeInput = this.changeInput.bind(this)
+        this.changeFavorit = this.changeFavorit.bind(this)
+
     }
     changeInput(e) {
         if (e.keyCode == 8) {
@@ -399,10 +378,17 @@ class Item extends React.Component {
         }
     }
     showHoverItem(e) {
-        this.deletIcon.style.display = 'block'
+        this.deletIcon.style.display = 'flex'
     }
     hideHoverItem(e) {
         this.deletIcon.style.display = 'none'
+    }
+    changeFavorit(){
+        if(this.favoritIcon.className === 'far fa-star'){
+            this.favoritIcon.className = 'fas fa-star'
+        } else {
+            this.favoritIcon.className = 'far fa-star'
+        }
     }
     render() {
         return (
@@ -411,8 +397,11 @@ class Item extends React.Component {
                     <input checked={this.props.isChecked} type='checkbox' onClick={this.props.handleClick} />
                     <input data={this.props.data} type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
                 </span>
-                <span onClick={this.props.trashHandleClick} className="iconesItem" ref={(input) => { this.deletIcon = input; }}>
+                <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
+                </span>
+                <span onClick={this.changeFavorit} className="iconCenter" >
+                    <i className="far fa-star" ref={(input) => { this.favoritIcon = input; }}></i>
                 </span>
             </li>
         );

@@ -178,7 +178,11 @@ li .iconesItem i{
     border: 1px solid #d8dade;
 }
 
-
+.iconCenter {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
 
 
 
