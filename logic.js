@@ -74,7 +74,8 @@ class CreateNewList extends React.Component {
                     isChecked: false,
                     key: Date.now(),
                     switchListFunction: this.addToDoneList,
-                    deleteFunction: this.deleteItemToDo
+                    deleteFunction: this.deleteItemToDo,
+
                 };
                 this.setState((prevState) => {
                     return {
@@ -386,6 +387,8 @@ class Item extends React.Component {
         this.showHoverItem = this.showHoverItem.bind(this)
         this.hideHoverItem = this.hideHoverItem.bind(this)
         this.changeInput = this.changeInput.bind(this)
+        this.changeFavorit = this.changeFavorit.bind(this)
+
     }
     changeInput(e) {
         if (e.keyCode == 8) {
@@ -403,10 +406,17 @@ class Item extends React.Component {
         }
     }
     showHoverItem(e) {
-        this.deletIcon.style.display = 'block'
+        this.deletIcon.style.display = 'flex'
     }
     hideHoverItem(e) {
         this.deletIcon.style.display = 'none'
+    }
+    changeFavorit(){
+        if(this.favoritIcon.className === 'far fa-star'){
+            this.favoritIcon.className = 'fas fa-star'
+        } else {
+            this.favoritIcon.className = 'far fa-star'
+        }
     }
     render() {
         return (
@@ -415,8 +425,11 @@ class Item extends React.Component {
                     <input checked={this.props.isChecked} type='checkbox' onClick={this.props.handleClick} />
                     <input data={this.props.data} type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
                 </span>
-                <span onClick={this.props.trashHandleClick} className="iconesItem" ref={(input) => { this.deletIcon = input; }}>
+                <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
+                </span>
+                <span onClick={this.changeFavorit} className="iconCenter" >
+                    <i className="far fa-star" ref={(input) => { this.favoritIcon = input; }}></i>
                 </span>
             </li>
         );
