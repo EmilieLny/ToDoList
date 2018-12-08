@@ -72,7 +72,10 @@ class CreateNewList extends React.Component {
         this.setThemeAndHidePicker = this.setThemeAndHidePicker.bind(this);
         this.itemToArrayClick = this.itemToArrayClick.bind(this);
         this.sendMail = this.sendMail.bind(this);
-        this.changeToFavorite = this.changeToFavorite.bind(this)
+        this.changeToFavorite = this.changeToFavorite.bind(this);
+        this.changeInputToDo = this.changeInputToDo.bind(this);
+        this.changeInputDone = this.changeInputDone.bind(this);
+
     }
     showHoverDetail(e) {
         e.target.nextSibling.style.display = "block";
@@ -95,7 +98,8 @@ class CreateNewList extends React.Component {
                     key: Date.now(),
                     switchListFunction: this.addToDoneList,
                     deleteFunction: this.deleteItemToDo,
-                    changeToFavorite: this.changeToFavorite
+                    changeToFavorite: this.changeToFavorite,
+                    editFunction: this.changeInputToDo
 
                 };
                 this.setState((prevState) => {
@@ -108,7 +112,7 @@ class CreateNewList extends React.Component {
         }
     }
 
-    itemToArrayClick(e) {
+    itemToArrayClick() {
 
         if (this.textItem.value !== "") {
             var newItem = {
@@ -117,7 +121,9 @@ class CreateNewList extends React.Component {
                 isStar: false,
                 key: Date.now(),
                 switchListFunction: this.addToDoneList,
-                deleteFunction: this.deleteItemToDo
+                deleteFunction: this.deleteItemToDo,
+                changeToFavorite: this.changeToFavorite,
+                editFunction: this.changeInputToDo
             };
             this.setState((prevState) => {
                 return {
@@ -141,6 +147,7 @@ class CreateNewList extends React.Component {
                 oldArray[i].switchListFunction = this.returnToToDoList;
                 oldArray[i].isChecked = true;
                 oldArray[i].deleteFunction = this.deleteItemDone;
+                oldArray[i].editFunction = this.changeInputDone;
                 doneListNewArr.push(oldArray[i]);
             }
         }
@@ -165,6 +172,7 @@ class CreateNewList extends React.Component {
                 oldArray[i].switchListFunction = this.addToDoneList;
                 oldArray[i].isChecked = false;
                 oldArray[i].deleteFunction = this.deleteItemToDo;
+                oldArray[i].editFunction = this.changeInputToDo;
                 toDoListNewArr.push(oldArray[i]);
             }
         }
@@ -297,6 +305,53 @@ class CreateNewList extends React.Component {
 
         this.themePicker.parentElement.style.display = "none"
     }
+    changeInputToDo(e) {
+        if (e.keyCode == 8) {
+            var newText = e.target.value.slice(0, -1)
+        } else if (e.keyCode > 47 && e.keyCode < 90 || e.keyCode == 32) {
+            var newText = e.target.value + e.key;
+        } else if (e.keyCode == 13) {
+            var newText = e.target.value;
+        }
+        var oldArray = this.state.arrayItems;
+        var editItem = e.target.getAttribute("data");
+        var newArray = [];
+        for (var i = 0; i < oldArray.length; i++) {
+            if (editItem != oldArray[i].key) {
+                newArray.push(oldArray[i]);
+            }else{
+                oldArray[i].text = newText;
+                newArray.push(oldArray[i]);
+            }
+        }
+        this.setState({
+            arrayItems: newArray
+        })
+    }
+    changeInputDone(e) {
+        if (e.keyCode == 8) {
+            var newText = e.target.value.slice(0, -1)
+        } else if (e.keyCode > 47 && e.keyCode < 90 || e.keyCode == 32) {
+            var newText = e.target.value + e.key;
+        } else if (e.keyCode == 13) {
+            var newText = e.target.value;
+        }
+        var oldArray = this.state.arrayDoneItems;
+        var editItem = e.target.getAttribute("data");
+        var newArray = [];
+        for (var i = 0; i < oldArray.length; i++) {
+            if (editItem != oldArray[i].key) {
+                newArray.push(oldArray[i]);
+            }else{
+                oldArray[i].text = newText;
+                newArray.push(oldArray[i]);
+            }
+        }
+        this.setState({
+            arrayDoneItems: newArray
+        })
+    }
+    
     sendMail() {
         var content = [];
         content.push("To Do Items:");
@@ -392,7 +447,7 @@ class ToDoItems extends React.Component {
 
     createTasks(item) {
         return (
-            <Item starClick={item.changeToFavorite} isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item editFunction={item.editFunction} starClick={item.changeToFavorite} isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -416,7 +471,7 @@ class DoneItems extends React.Component {
 
     createTasks(item) {
         return (
-            <Item hideStar={"none"} isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item editFunction={item.editFunction} hideStar={"none"} isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -434,27 +489,8 @@ class DoneItems extends React.Component {
 class Item extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            inputValue: this.props.text,
-        }
         this.showHoverItem = this.showHoverItem.bind(this)
         this.hideHoverItem = this.hideHoverItem.bind(this)
-        this.changeInput = this.changeInput.bind(this)
-    }
-    changeInput(e) {
-        if (e.keyCode == 8) {
-            var newText = e.target.value.slice(0, -1)
-            this.setState({
-                inputValue: newText
-            })
-        } else if (e.keyCode > 47 && e.keyCode < 90 || e.keyCode == 32) {
-            var newText = e.target.value + e.key
-            this.setState({
-                inputValue: newText
-            })
-        } else if (e.keyCode == 13) {
-            this.props.function(e)
-        }
     }
     showHoverItem() {
         this.deletIcon.style.display = 'flex'
@@ -467,7 +503,7 @@ class Item extends React.Component {
             <li className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
                 <span>
                     <input checked={this.props.isChecked} type='checkbox' onClick={this.props.handleClick} />
-                    <input data={this.props.data} type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
+                    <input data={this.props.data} type='text' onKeyUp={this.props.editFunction} value={this.props.text} />
                 </span>
                 <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
