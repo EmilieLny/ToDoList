@@ -35,6 +35,8 @@ class CreateNewList extends React.Component {
             left: 0,
             top: 0,
             themeColor: "white",
+            themeFontColor: "#57606f",
+            gradientFill: "#eef9f2",
             arrayItems: [],
             arrayDoneItems: [],
             somethingIsDone : false,
@@ -161,9 +163,40 @@ class CreateNewList extends React.Component {
     }
     setThemeAndHidePicker(){
         console.log(this.themePicker.value)
-        this.setState({
-            themecolor: this.themePicker.value
-        })
+        if(this.themePicker.value==="default"){
+            this.setState({
+                themecolor: "white",
+                themeFontColor: "#57606f",
+                gradientFill: "#eef9f2"
+            })
+        }else if(this.themePicker.value==="red"){
+            this.setState({
+                themecolor: "red",
+                themeFontColor: "red",
+                gradientFill: "red"
+            })
+        }else if(this.themePicker.value==="purple"){
+            this.setState({
+                themecolor: "purple",
+                themeFontColor: "purple",
+                gradientFill: "purple"
+            })
+        }else if(this.themePicker.value==="blue"){
+            this.setState({
+                themecolor: "blue",
+                themeFontColor: "blue",
+                gradientFill: "blue"
+            })
+        }else if(this.themePicker.value==="black"){
+            this.setState({
+                themecolor: "black",
+                themeFontColor: "black",
+                gradientFill: "black"
+            })
+        }else{
+            alert("something went terribly wrong in code")
+        }
+        
         this.themePicker.parentElement.style.display = "none"
     }
     render() {
@@ -173,8 +206,13 @@ class CreateNewList extends React.Component {
         };
         var theme = {
             backgroundColor: this.state.themecolor,
+            color: this.state.themeFontColor,
+            
         };
-        var somethingIsDone = this.state.somethingIsDone ? <div className='doneList'><p><i className="far fa-check-circle"></i> List of Completed tasks</p><DoneItems entries={this.state.arrayDoneItems} /></div> : null;
+        var gradientFillDoneList ={
+            backgroundImage: `linear-gradient(${this.state.gradientFill}, white)`
+        }
+        var somethingIsDone = this.state.somethingIsDone ? <div style={gradientFillDoneList} className='doneList'><p><i className="far fa-check-circle"></i> List of Completed tasks</p><DoneItems entries={this.state.arrayDoneItems} /></div> : null;
         return (
             <div className="topBarBlockContainer">
                 <div style={theme} className="createNewListInputBar">
@@ -210,10 +248,10 @@ class CreateNewList extends React.Component {
                             </li>
                             <li className="themePickerContainer">
                                 <select onChange={this.setThemeAndHidePicker} ref={(input) => { this.themePicker = input; }}>
-                                    <option onClick={this.closeThemePicker} value="white">Default</option>
-                                    <option onClick={this.closeThemePicker} value="Red">Red</option>
-                                    <option onClick={this.closeThemePicker} value="Purple">Purple</option>
-                                    <option onClick={this.closeThemePicker} value="Blue">Blue</option>
+                                    <option onClick={this.closeThemePicker} value="default">Default</option>
+                                    <option onClick={this.closeThemePicker} value="red">Red</option>
+                                    <option onClick={this.closeThemePicker} value="purple">Purple</option>
+                                    <option onClick={this.closeThemePicker} value="blue">Blue</option>
                                     <option onClick={this.closeThemePicker} value="black">black</option>
                                 </select>
                             </li>

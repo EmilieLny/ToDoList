@@ -51,6 +51,7 @@ body {
     margin-bottom: 1%;
 }
 .titleInput{
+    background-color: inherit;
     width: 95%;
     font-size: 1.5em;
     border: none;
@@ -80,6 +81,7 @@ body {
     border-radius: 100%;
 }
 .listItemInput{
+    background-color: inherit;
     width: 91%;
     margin-left: 1%;
     font-size: 1.1em;
@@ -151,6 +153,7 @@ li .iconesItem i{
     font-size: 1em;
     color: #57606f;
     padding: 3px;
+    background-color: inherit;
 }
 
 .doneList {
@@ -172,6 +175,7 @@ li .iconesItem i{
     padding: 3px;
     background: #ffffff9e;
     border: 1px solid #d8dade;
+    background-color: inherit;
 }
 
 
