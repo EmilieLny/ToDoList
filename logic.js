@@ -23,6 +23,7 @@ class Board extends React.Component {
         return (
             <div className="board">
                 <CreateNewList />
+                <CreateNewList />
             </div>
         );
     }
@@ -202,7 +203,7 @@ class CreateNewList extends React.Component {
                 }
             }
             this.setState({
-                arrayItems: newArray
+                arrayItems: newArray,
             })
         } else {
             e.target.className = 'far fa-star'
@@ -293,7 +294,8 @@ class CreateNewList extends React.Component {
     render() {
         var style = {
             left: this.state.left + "px",
-            top: this.state.top + "px"
+            top: this.state.top + "px",
+            fontSize: '12px'
         };
         var theme = {
             backgroundColor: this.state.themecolor,
@@ -309,7 +311,10 @@ class CreateNewList extends React.Component {
                 <div style={theme} className="createNewListInputBar">
                     <div className="top-Title-Row">
                         <input ref={(input) => { this.title = input; }} className="titleInput" placeholder="Title" type="text"></input>
-                        <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
+                        <div className="pinIconContainer">
+                            <i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-plus-circle"></i>
+                            <div style={style} className="hoverDetail"> Add New List</div>
+                        </div>
                     </div>
                     <div className="listItemContainer">
                         <div onClick={this.itemToArrayClick} className="plusIconContainer">
@@ -322,10 +327,6 @@ class CreateNewList extends React.Component {
 
                     <div className="bottomToolBarContainer">
                         <ul className="ToolsConatinter">
-                            <li ><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-bell"></i>
-                                <div style={style} className="hoverDetail">Remind Me
-                                </div>
-                            </li>
                             <li><i onClick={this.sendMail} onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-share-square"></i>
                                 <div style={style} className="hoverDetail">Share
                                 </div>

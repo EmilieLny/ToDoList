@@ -26,8 +26,6 @@ body {
 .board {
     width: 100vw;
     min-height: calc(100vh - 80px);
-    display: flex;
-    justify-content: center;
 }
 
 /* CREATE NEW LIST CONTAINER */
@@ -186,10 +184,6 @@ li .iconesItem i{
 
 
 
-
-
-
-
 @media only screen and (max-width: 835px) {
     .titleInput{
         width: 92%;
@@ -199,5 +193,13 @@ li .iconesItem i{
     }
     .listItemInput{
         width: 85%;
+    }
+}
+@media only screen and (max-width: 1230px) {
+    .toDoListItems input[type='text'] {
+        width: 38em;
+    }
+    .doneList input[type='text'] {
+        width: 38em;
     }
 }
