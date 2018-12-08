@@ -34,6 +34,7 @@ class CreateNewList extends React.Component {
         this.state = {
             left: 0,
             top: 0,
+            themeColor: "white",
             arrayItems: [],
             arrayDoneItems: [],
             somethingIsDone : false,
@@ -45,6 +46,8 @@ class CreateNewList extends React.Component {
         this.returnToToDoList = this.returnToToDoList.bind(this);
         this.deleteItemDone = this.deleteItemDone.bind(this);
         this.deleteItemToDo = this.deleteItemToDo.bind(this);
+        this.openThemePicker = this.openThemePicker.bind(this);
+        this.setThemeAndHidePicker = this.setThemeAndHidePicker.bind(this);
     }
     showHoverDetail(e) {
         e.target.nextSibling.style.display = "block";
@@ -152,15 +155,29 @@ class CreateNewList extends React.Component {
         })
     }
 
+    openThemePicker() {
+        console.log(this.themePicker.parentElement)
+        this.themePicker.parentElement.style.display = "block"
+    }
+    setThemeAndHidePicker(){
+        console.log(this.themePicker.value)
+        this.setState({
+            themecolor: this.themePicker.value
+        })
+        this.themePicker.parentElement.style.display = "none"
+    }
     render() {
         var style = {
             left: this.state.left + "px",
             top: this.state.top + "px"
         };
+        var theme = {
+            backgroundColor: this.state.themecolor,
+        };
         var somethingIsDone = this.state.somethingIsDone ? <div className='doneList'><p><i className="far fa-check-circle"></i> List of Completed tasks</p><DoneItems entries={this.state.arrayDoneItems} /></div> : null;
         return (
             <div className="topBarBlockContainer">
-                <div className="createNewListInputBar">
+                <div style={theme} className="createNewListInputBar">
                     <div className="top-Title-Row">
                         <input className="titleInput" placeholder="Title" type="text"></input>
                         <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
@@ -181,15 +198,24 @@ class CreateNewList extends React.Component {
                         <ul className="ToolsConatinter">
                             <li ><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-bell"></i>
                                 <div style={style} className="hoverDetail">Remind Me
-                        </div>
+                                </div>
                             </li>
                             <li><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-share-square"></i>
                                 <div style={style} className="hoverDetail">Share
-                        </div>
+                                </div>
                             </li>
-                            <li><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-palette"></i>
-                                <div style={style} className="hoverDetail">Choose color
-                        </div>
+                            <li><i onClick={this.openThemePicker} onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-palette"></i>
+                                <div style={style} className="hoverDetail">Choose theme
+                                </div>
+                            </li>
+                            <li className="themePickerContainer">
+                                <select onChange={this.setThemeAndHidePicker} ref={(input) => { this.themePicker = input; }}>
+                                    <option onClick={this.closeThemePicker} value="white">Default</option>
+                                    <option onClick={this.closeThemePicker} value="Red">Red</option>
+                                    <option onClick={this.closeThemePicker} value="Purple">Purple</option>
+                                    <option onClick={this.closeThemePicker} value="Blue">Blue</option>
+                                    <option onClick={this.closeThemePicker} value="black">black</option>
+                                </select>
                             </li>
                         </ul>
 

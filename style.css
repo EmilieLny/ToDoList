@@ -127,6 +127,9 @@ body {
     text-align: center;
     padding-top: 0.5%;
 }
+.themePickerContainer{
+    display: none;
+}
 
 /* ITEM COMPONENT */
 ul {
