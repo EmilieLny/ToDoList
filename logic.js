@@ -85,8 +85,8 @@ class CreateNewList extends React.Component {
             }
             this.textItem.value = "";
         }
-
     }
+
     itemToArrayClick(e) {
 
         if (this.textItem.value !== "") {
@@ -104,7 +104,6 @@ class CreateNewList extends React.Component {
             });
         }
         this.textItem.value = "";
-
 
     }
 
@@ -129,8 +128,8 @@ class CreateNewList extends React.Component {
             arrayDoneItems: doneListNewArr,
             somethingIsDone: true,
         })
-
     }
+
     returnToToDoList(e) {
         var oldArray = this.state.arrayDoneItems;
         var doneItem = e.target.nextSibling.getAttribute("data");
@@ -170,20 +169,6 @@ class CreateNewList extends React.Component {
         }
         this.setState({
             arrayDoneItems: newArray
-        })
-    }
-
-    deleteItemToDo(e) {
-        var oldArray = this.state.arrayItems;
-        var deleteItem = e.target.parentElement.previousSibling.children[1].getAttribute("data");
-        var newArray = [];
-        for (var i = 0; i < oldArray.length; i++) {
-            if (deleteItem != oldArray[i].key) {
-                newArray.push(oldArray[i]);
-            }
-        }
-        this.setState({
-            arrayItems: newArray
         })
     }
 
@@ -323,7 +308,6 @@ class CreateNewList extends React.Component {
                                 </select>
                             </li>
                         </ul>
-
                     </div>
                 </div>
             </div>
@@ -405,18 +389,11 @@ class Item extends React.Component {
             this.props.function(e)
         }
     }
-    showHoverItem(e) {
+    showHoverItem() {
         this.deletIcon.style.display = 'flex'
     }
-    hideHoverItem(e) {
+    hideHoverItem() {
         this.deletIcon.style.display = 'none'
-    }
-    changeFavorit(){
-        if(this.favoritIcon.className === 'far fa-star'){
-            this.favoritIcon.className = 'fas fa-star'
-        } else {
-            this.favoritIcon.className = 'far fa-star'
-        }
     }
     render() {
         return (
@@ -428,7 +405,7 @@ class Item extends React.Component {
                 <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
                 </span>
-                <span onClick={this.changeFavorit} className="iconCenter" >
+                <span className="iconCenter" >
                     <i className="far fa-star" ref={(input) => { this.favoritIcon = input; }}></i>
                 </span>
             </li>
