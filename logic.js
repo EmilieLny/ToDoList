@@ -149,6 +149,11 @@ class CreateNewList extends React.Component {
             arrayItems: toDoListNewArr,
             arrayDoneItems: newArray
         })
+        if(this.state.arrayDoneItems.length === 1){
+            this.setState({
+                somethingIsDone : false,
+            })
+        }
     }
 
     deleteItemDone(e) {
@@ -193,9 +198,9 @@ class CreateNewList extends React.Component {
             })
         } else if (this.themePicker.value === "red") {
             this.setState({
-                themecolor: "red",
-                themeFontColor: "red",
-                gradientFill: "red"
+                themecolor: "#ff4757",
+                themeFontColor: "white",
+                gradientFill: "#ff6b81"
             })
         } else if (this.themePicker.value === "purple") {
             this.setState({
