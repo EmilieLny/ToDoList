@@ -19,11 +19,29 @@ class NavBar extends React.Component {
     }
 }
 class Board extends React.Component {
+    constructor(props) {
+        super(props)
+        this.addNewList = this.addNewList.bind(this)
+        this.state = {
+            arrTitleList : [], 
+            count : 1
+        }
+    }
+    addNewList() {
+        var arrTitles = this.state.arrTitleList;
+        var newCount = this.state.count +1
+        arrTitles.push(newCount)
+        this.setState({
+            arrTitleList: arrTitles,
+            count : newCount
+        })
+    }
     render() {
+        var newList = this.state.arrTitleList.map(x => <CreateNewList listNum={x} addNewList={this.addNewList}/>);
         return (
             <div className="board">
-                <CreateNewList />
-                <CreateNewList />
+                <CreateNewList addNewList={this.addNewList}/>
+                {newList}
             </div>
         );
     }
@@ -279,7 +297,6 @@ class CreateNewList extends React.Component {
 
         this.themePicker.parentElement.style.display = "none"
     }
-
     sendMail() {
         var content = [];
         content.push("To Do Items:");
@@ -325,7 +342,7 @@ class CreateNewList extends React.Component {
                 <div style={theme} className="createNewListInputBar">
                     <div className="top-Title-Row">
                         <input ref={(input) => { this.title = input; }} className="titleInput" placeholder="Title" type="text"></input>
-                        <div className="pinIconContainer">
+                        <div className="pinIconContainer" onClick={this.props.addNewList}>
                             <i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-plus-circle"></i>
                             <div style={style} className="hoverDetail"> Add New List</div>
                         </div>
