@@ -53,6 +53,7 @@ class CreateNewList extends React.Component {
         this.setThemeAndHidePicker = this.setThemeAndHidePicker.bind(this);
         this.itemToArrayClick = this.itemToArrayClick.bind(this);
         this.sendMail = this.sendMail.bind(this);
+        this.changeToFavorite = this.changeToFavorite.bind(this)
     }
     showHoverDetail(e) {
         e.target.nextSibling.style.display = "block";
@@ -75,6 +76,7 @@ class CreateNewList extends React.Component {
                     key: Date.now(),
                     switchListFunction: this.addToDoneList,
                     deleteFunction: this.deleteItemToDo,
+                    changeToFavorite: this.changeToFavorite
 
                 };
                 this.setState((prevState) => {
@@ -107,7 +109,6 @@ class CreateNewList extends React.Component {
 
 
     }
-
     addToDoneList(e) {
         var oldArray = this.state.arrayItems;
         var doneItem = e.target.nextSibling.getAttribute("data");
@@ -187,6 +188,27 @@ class CreateNewList extends React.Component {
         })
     }
 
+    changeToFavorite(e) {
+        if (e.target.className === 'far fa-star') {
+            e.target.className = 'fas fa-star'
+            var oldArray = this.state.arrayItems;
+            var favItem = e.target.parentElement.previousSibling.previousSibling.children[1].getAttribute("data");
+            var newArray = [];
+            for (var i = 0; i < oldArray.length; i++) {
+                if (favItem == oldArray[i].key) {
+                    newArray.unshift(oldArray[i]);
+                } else {
+                    newArray.push(oldArray[i]);
+                }
+            }
+            this.setState({
+                arrayItems: newArray
+            })
+        } else {
+            e.target.className = 'far fa-star'
+        }
+    }
+
     openThemePicker() {
         console.log(this.themePicker.parentElement)
         this.themePicker.parentElement.style.display = "block"
@@ -247,27 +269,27 @@ class CreateNewList extends React.Component {
         content.push("To Do Items:");
         content.push("\n");
         var arrayItems = this.state.arrayItems;
-        for(var i=0; i<arrayItems.length; i++){
-            content.push(`${i+1}.${arrayItems[i].text}`);
+        for (var i = 0; i < arrayItems.length; i++) {
+            content.push(`${i + 1}.${arrayItems[i].text}`);
             content.push("\n");
         }
 
         var arrayDoneItems = this.state.arrayDoneItems;
         content.push("Done List Items:");
         content.push("\n");
-        for(var i=0; i<arrayDoneItems.length; i++){
-            content.push(`${i+1}.${arrayDoneItems[i].text}`);
+        for (var i = 0; i < arrayDoneItems.length; i++) {
+            content.push(`${i + 1}.${arrayDoneItems[i].text}`);
             content.push("\n");
         }
 
         var link = "mailto:me@example.com"
-                 + "?cc=myCCaddress@example.com"
-                 + "&subject=" + escape(this.title.value)
-                 + "&body=" + escape(content.join(""))
-        ;
+            + "?cc=myCCaddress@example.com"
+            + "&subject=" + escape(this.title.value)
+            + "&body=" + escape(content.join(""))
+            ;
         window.location.href = link;
     }
-    
+
     render() {
         var style = {
             left: this.state.left + "px",
@@ -339,7 +361,7 @@ class ToDoItems extends React.Component {
 
     createTasks(item) {
         return (
-            <Item isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item starClick={item.changeToFavorite} isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -387,8 +409,6 @@ class Item extends React.Component {
         this.showHoverItem = this.showHoverItem.bind(this)
         this.hideHoverItem = this.hideHoverItem.bind(this)
         this.changeInput = this.changeInput.bind(this)
-        this.changeFavorit = this.changeFavorit.bind(this)
-
     }
     changeInput(e) {
         if (e.keyCode == 8) {
@@ -411,13 +431,7 @@ class Item extends React.Component {
     hideHoverItem(e) {
         this.deletIcon.style.display = 'none'
     }
-    changeFavorit(){
-        if(this.favoritIcon.className === 'far fa-star'){
-            this.favoritIcon.className = 'fas fa-star'
-        } else {
-            this.favoritIcon.className = 'far fa-star'
-        }
-    }
+
     render() {
         return (
             <li className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
@@ -428,7 +442,7 @@ class Item extends React.Component {
                 <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
                 </span>
-                <span onClick={this.changeFavorit} className="iconCenter" >
+                <span onClick={this.props.starClick} className="iconCenter" >
                     <i className="far fa-star" ref={(input) => { this.favoritIcon = input; }}></i>
                 </span>
             </li>
