@@ -88,14 +88,15 @@ class CreateNewList extends React.Component {
             }
             this.textItem.value = "";
         }
-
     }
+
     itemToArrayClick(e) {
 
         if (this.textItem.value !== "") {
             var newItem = {
                 text: this.textItem.value,
                 isChecked: false,
+                isStar: false,
                 key: Date.now(),
                 switchListFunction: this.addToDoneList,
                 deleteFunction: this.deleteItemToDo
@@ -107,7 +108,6 @@ class CreateNewList extends React.Component {
             });
         }
         this.textItem.value = "";
-
 
     }
     addToDoneList(e) {
@@ -131,8 +131,8 @@ class CreateNewList extends React.Component {
             arrayDoneItems: doneListNewArr,
             somethingIsDone: true,
         })
-
     }
+
     returnToToDoList(e) {
         var oldArray = this.state.arrayDoneItems;
         var doneItem = e.target.nextSibling.getAttribute("data");
@@ -197,6 +197,7 @@ class CreateNewList extends React.Component {
             var newArray = [];
             for (var i = 0; i < oldArray.length; i++) {
                 if (favItem == oldArray[i].key) {
+                    oldArray[i].isStar = true;
                     newArray.unshift(oldArray[i]);
                 } else {
                     newArray.push(oldArray[i]);
@@ -207,6 +208,20 @@ class CreateNewList extends React.Component {
             })
         } else {
             e.target.className = 'far fa-star'
+            var oldArray = this.state.arrayItems;
+            var favItem = e.target.parentElement.previousSibling.previousSibling.children[1].getAttribute("data");
+            var newArray = [];
+            for (var i = 0; i < oldArray.length; i++) {
+                if (oldArray[i].isStar= true) {
+                    newArray.unshift(oldArray[i]);
+                } else {
+                    newArray.push(oldArray[i]);
+                }
+            }
+            this.setState({
+                arrayItems: newArray
+            })
+
         }
     }
 
@@ -299,8 +314,7 @@ class CreateNewList extends React.Component {
         };
         var theme = {
             backgroundColor: this.state.themecolor,
-            color: this.state.themeFontColor,
-
+            color: this.state.themeFontColor
         };
         var gradientFillDoneList = {
             backgroundImage: `linear-gradient(${this.state.gradientFillFirst}, ${this.state.gradientFillSecond})`
@@ -346,7 +360,6 @@ class CreateNewList extends React.Component {
                                 </select>
                             </li>
                         </ul>
-
                     </div>
                 </div>
             </div>
@@ -386,7 +399,7 @@ class DoneItems extends React.Component {
 
     createTasks(item) {
         return (
-            <Item isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item hideStar={"none"} isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -426,13 +439,12 @@ class Item extends React.Component {
             this.props.function(e)
         }
     }
-    showHoverItem(e) {
+    showHoverItem() {
         this.deletIcon.style.display = 'flex'
     }
-    hideHoverItem(e) {
+    hideHoverItem() {
         this.deletIcon.style.display = 'none'
     }
-
     render() {
         return (
             <li className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
@@ -443,7 +455,7 @@ class Item extends React.Component {
                 <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
                 </span>
-                <span onClick={this.props.starClick} className="iconCenter" >
+                <span style={{display:this.props.hideStar}} onClick={this.props.starClick} className="iconCenter" >
                     <i className="far fa-star" ref={(input) => { this.favoritIcon = input; }}></i>
                 </span>
             </li>
