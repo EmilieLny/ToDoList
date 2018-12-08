@@ -52,6 +52,7 @@ class CreateNewList extends React.Component {
         this.openThemePicker = this.openThemePicker.bind(this);
         this.setThemeAndHidePicker = this.setThemeAndHidePicker.bind(this);
         this.itemToArrayClick = this.itemToArrayClick.bind(this);
+        this.sendMail = this.sendMail.bind(this);
     }
     showHoverDetail(e) {
         e.target.nextSibling.style.display = "block";
@@ -240,6 +241,33 @@ class CreateNewList extends React.Component {
 
         this.themePicker.parentElement.style.display = "none"
     }
+
+    sendMail() {
+        var content = [];
+        content.push("To Do Items:");
+        content.push("\n");
+        var arrayItems = this.state.arrayItems;
+        for(var i=0; i<arrayItems.length; i++){
+            content.push(`${i+1}.${arrayItems[i].text}`);
+            content.push("\n");
+        }
+
+        var arrayDoneItems = this.state.arrayDoneItems;
+        content.push("Done List Items:");
+        content.push("\n");
+        for(var i=0; i<arrayDoneItems.length; i++){
+            content.push(`${i+1}.${arrayDoneItems[i].text}`);
+            content.push("\n");
+        }
+
+        var link = "mailto:me@example.com"
+                 + "?cc=myCCaddress@example.com"
+                 + "&subject=" + escape(this.title.value)
+                 + "&body=" + escape(content.join(""))
+        ;
+        window.location.href = link;
+    }
+    
     render() {
         var style = {
             left: this.state.left + "px",
@@ -258,7 +286,7 @@ class CreateNewList extends React.Component {
             <div className="topBarBlockContainer">
                 <div style={theme} className="createNewListInputBar">
                     <div className="top-Title-Row">
-                        <input className="titleInput" placeholder="Title" type="text"></input>
+                        <input ref={(input) => { this.title = input; }} className="titleInput" placeholder="Title" type="text"></input>
                         <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
                     </div>
                     <div className="listItemContainer">
@@ -276,7 +304,7 @@ class CreateNewList extends React.Component {
                                 <div style={style} className="hoverDetail">Remind Me
                                 </div>
                             </li>
-                            <li><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-share-square"></i>
+                            <li><i onClick={this.sendMail} onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-share-square"></i>
                                 <div style={style} className="hoverDetail">Share
                                 </div>
                             </li>
