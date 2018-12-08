@@ -23,24 +23,24 @@ class Board extends React.Component {
         super(props)
         this.addNewList = this.addNewList.bind(this)
         this.state = {
-            arrTitleList : [], 
-            count : 1
+            arrTitleList: [],
+            count: 1
         }
     }
     addNewList() {
         var arrTitles = this.state.arrTitleList;
-        var newCount = this.state.count +1
+        var newCount = this.state.count + 1
         arrTitles.push(newCount)
         this.setState({
             arrTitleList: arrTitles,
-            count : newCount
+            count: newCount
         })
     }
     render() {
-        var newList = this.state.arrTitleList.map(x => <CreateNewList listNum={x} addNewList={this.addNewList}/>);
+        var newList = this.state.arrTitleList.map(x => <CreateNewList listNum={x} addNewList={this.addNewList} />);
         return (
             <div className="board">
-                <CreateNewList addNewList={this.addNewList}/>
+                <CreateNewList addNewList={this.addNewList} />
                 {newList}
             </div>
         );
@@ -100,7 +100,6 @@ class CreateNewList extends React.Component {
                     deleteFunction: this.deleteItemToDo,
                     changeToFavorite: this.changeToFavorite,
                     editFunction: this.changeInputToDo
-
                 };
                 this.setState((prevState) => {
                     return {
@@ -238,7 +237,7 @@ class CreateNewList extends React.Component {
             var favItem = e.target.parentElement.previousSibling.previousSibling.children[1].getAttribute("data");
             var newArray = [];
             for (var i = 0; i < oldArray.length; i++) {
-                if (oldArray[i].isStar= true) {
+                if (oldArray[i].isStar = true) {
                     newArray.unshift(oldArray[i]);
                 } else {
                     newArray.push(oldArray[i]);
@@ -247,16 +246,13 @@ class CreateNewList extends React.Component {
             this.setState({
                 arrayItems: newArray
             })
-
         }
     }
 
     openThemePicker() {
-        console.log(this.themePicker.parentElement)
         this.themePicker.parentElement.style.display = "block"
     }
     setThemeAndHidePicker() {
-        console.log(this.themePicker.value)
         if (this.themePicker.value === "default") {
             this.setState({
                 themecolor: "white",
@@ -319,7 +315,7 @@ class CreateNewList extends React.Component {
         for (var i = 0; i < oldArray.length; i++) {
             if (editItem != oldArray[i].key) {
                 newArray.push(oldArray[i]);
-            }else{
+            } else {
                 oldArray[i].text = newText;
                 newArray.push(oldArray[i]);
             }
@@ -342,7 +338,7 @@ class CreateNewList extends React.Component {
         for (var i = 0; i < oldArray.length; i++) {
             if (editItem != oldArray[i].key) {
                 newArray.push(oldArray[i]);
-            }else{
+            } else {
                 oldArray[i].text = newText;
                 newArray.push(oldArray[i]);
             }
@@ -351,7 +347,7 @@ class CreateNewList extends React.Component {
             arrayDoneItems: newArray
         })
     }
-    
+
     sendMail() {
         var content = [];
         content.push("To Do Items:");
@@ -508,7 +504,7 @@ class Item extends React.Component {
                 <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
                 </span>
-                <span style={{display:this.props.hideStar}} onClick={this.props.starClick} className="iconCenter" >
+                <span style={{ display: this.props.hideStar }} onClick={this.props.starClick} className="iconCenter" >
                     <i className="far fa-star" ref={(input) => { this.favoritIcon = input; }}></i>
                 </span>
             </li>
