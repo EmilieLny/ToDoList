@@ -36,10 +36,11 @@ class CreateNewList extends React.Component {
             top: 0,
             themeColor: "white",
             themeFontColor: "#57606f",
-            gradientFill: "#eef9f2",
+            gradientFillFirst: "#eef9f2",
+            gradientFillSecond: "white",
             arrayItems: [],
             arrayDoneItems: [],
-            somethingIsDone : false,
+            somethingIsDone: false,
         }
         this.showHoverDetail = this.showHoverDetail.bind(this);
         this.turnOffHover = this.turnOffHover.bind(this);
@@ -88,21 +89,21 @@ class CreateNewList extends React.Component {
         var doneItem = e.target.nextSibling.getAttribute("data");
         var newArray = [];
         var doneListNewArr = this.state.arrayDoneItems;
-        
-        for(var i=0;i<oldArray.length; i++){
-            if(doneItem!=oldArray[i].key){
+
+        for (var i = 0; i < oldArray.length; i++) {
+            if (doneItem != oldArray[i].key) {
                 newArray.push(oldArray[i]);
-            }else if(doneItem==oldArray[i].key){
-                oldArray[i].switchListFunction= this.returnToToDoList;
-                oldArray[i].isChecked= true;
-                oldArray[i].deleteFunction= this.deleteItemDone;
+            } else if (doneItem == oldArray[i].key) {
+                oldArray[i].switchListFunction = this.returnToToDoList;
+                oldArray[i].isChecked = true;
+                oldArray[i].deleteFunction = this.deleteItemDone;
                 doneListNewArr.push(oldArray[i]);
             }
         }
         this.setState({
             arrayItems: newArray,
             arrayDoneItems: doneListNewArr,
-            somethingIsDone : true,
+            somethingIsDone: true,
         })
 
     }
@@ -111,15 +112,15 @@ class CreateNewList extends React.Component {
         var doneItem = e.target.nextSibling.getAttribute("data");
         var newArray = [];
         var toDoListNewArr = this.state.arrayItems;
-        
-        for(var i=0;i<oldArray.length; i++){
-            if(doneItem!=oldArray[i].key){
+
+        for (var i = 0; i < oldArray.length; i++) {
+            if (doneItem != oldArray[i].key) {
                 newArray.push(oldArray[i]);
-                
-            }else if(doneItem==oldArray[i].key){
-                oldArray[i].switchListFunction= this.addToDoneList;
-                oldArray[i].isChecked= false;
-                oldArray[i].deleteFunction= this.deleteItemToDo;
+
+            } else if (doneItem == oldArray[i].key) {
+                oldArray[i].switchListFunction = this.addToDoneList;
+                oldArray[i].isChecked = false;
+                oldArray[i].deleteFunction = this.deleteItemToDo;
                 toDoListNewArr.push(oldArray[i]);
             }
         }
@@ -127,9 +128,9 @@ class CreateNewList extends React.Component {
             arrayItems: toDoListNewArr,
             arrayDoneItems: newArray
         })
-        if(this.state.arrayDoneItems.length === 1){
+        if (this.state.arrayDoneItems.length === 1) {
             this.setState({
-                somethingIsDone : false,
+                somethingIsDone: false,
             })
         }
     }
@@ -138,8 +139,8 @@ class CreateNewList extends React.Component {
         var oldArray = this.state.arrayDoneItems;
         var deleteItem = e.target.parentElement.previousSibling.children[1].getAttribute("data");
         var newArray = [];
-        for(var i=0;i<oldArray.length; i++){
-            if(deleteItem!=oldArray[i].key){
+        for (var i = 0; i < oldArray.length; i++) {
+            if (deleteItem != oldArray[i].key) {
                 newArray.push(oldArray[i]);
             }
         }
@@ -152,8 +153,8 @@ class CreateNewList extends React.Component {
         var oldArray = this.state.arrayItems;
         var deleteItem = e.target.parentElement.previousSibling.children[1].getAttribute("data");
         var newArray = [];
-        for(var i=0;i<oldArray.length; i++){
-            if(deleteItem!=oldArray[i].key){
+        for (var i = 0; i < oldArray.length; i++) {
+            if (deleteItem != oldArray[i].key) {
                 newArray.push(oldArray[i]);
             }
         }
@@ -166,42 +167,54 @@ class CreateNewList extends React.Component {
         console.log(this.themePicker.parentElement)
         this.themePicker.parentElement.style.display = "block"
     }
-    setThemeAndHidePicker(){
+    setThemeAndHidePicker() {
         console.log(this.themePicker.value)
-        if(this.themePicker.value==="default"){
+        if (this.themePicker.value === "default") {
             this.setState({
                 themecolor: "white",
                 themeFontColor: "#57606f",
-                gradientFill: "#eef9f2"
+                gradientFillFirst: "#eef9f2",
+                gradientFillSecond: "white"
             })
-        }else if(this.themePicker.value==="red"){
+        } else if (this.themePicker.value === "pink") {
             this.setState({
-                themecolor: "#ff4757",
+                themecolor: "#ffb5bb",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#ffb5bb"
+            })
+        } else if (this.themePicker.value === "orange") {
+            this.setState({
+                themecolor: "#ffaf90",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#ffaf90"
+            })
+        } else if (this.themePicker.value === "blue") {
+            this.setState({
+                themecolor: "#b5cfff",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#b5cfff"
+            })
+        } else if (this.themePicker.value === "green") {
+            this.setState({
+                themecolor: "#e1f5e8",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#e1f5e8"
+            })
+        } else if (this.themePicker.value === "gray") {
+            this.setState({
+                themecolor: "#c7c7c7",
                 themeFontColor: "white",
-                gradientFill: "#ff6b81"
+                gradientFillFirst: "#797979",
+                gradientFillSecond: "#c7c7c7"
             })
-        }else if(this.themePicker.value==="purple"){
-            this.setState({
-                themecolor: "purple",
-                themeFontColor: "purple",
-                gradientFill: "purple"
-            })
-        }else if(this.themePicker.value==="blue"){
-            this.setState({
-                themecolor: "blue",
-                themeFontColor: "blue",
-                gradientFill: "blue"
-            })
-        }else if(this.themePicker.value==="black"){
-            this.setState({
-                themecolor: "black",
-                themeFontColor: "black",
-                gradientFill: "black"
-            })
-        }else{
+        } else {
             alert("something went terribly wrong in code")
         }
-        
+
         this.themePicker.parentElement.style.display = "none"
     }
     render() {
@@ -212,10 +225,10 @@ class CreateNewList extends React.Component {
         var theme = {
             backgroundColor: this.state.themecolor,
             color: this.state.themeFontColor,
-            
+
         };
-        var gradientFillDoneList ={
-            backgroundImage: `linear-gradient(${this.state.gradientFill}, white)`
+        var gradientFillDoneList = {
+            backgroundImage: `linear-gradient(${this.state.gradientFillFirst}, ${this.state.gradientFillSecond})`
         }
         var somethingIsDone = this.state.somethingIsDone ? <div style={gradientFillDoneList} className='doneList'><p><i className="far fa-check-circle"></i> List of Completed tasks</p><DoneItems entries={this.state.arrayDoneItems} /></div> : null;
         return (
@@ -227,16 +240,13 @@ class CreateNewList extends React.Component {
                     </div>
                     <div className="listItemContainer">
                         <div className="plusIconContainer">
-                        <i className="fas fa-plus"></i>
+                            <i className="fas fa-plus"></i>
                         </div>
                         <input ref={(input) => { this.textItem = input; }} onKeyUp={this.itemToArray} className="listItemInput" placeholder="List item" type="text"></input>
-                        {/* <div className="editIconContainer">
-                            <i className="fas fa-edit"></i>
-                        </div> */}
                     </div>
                     <ToDoItems entries={this.state.arrayItems} />
                     {somethingIsDone}
-                    
+
                     <div className="bottomToolBarContainer">
                         <ul className="ToolsConatinter">
                             <li ><i onMouseEnter={this.showHoverDetail} onMouseLeave={this.turnOffHover} className="fas fa-bell"></i>
@@ -254,10 +264,11 @@ class CreateNewList extends React.Component {
                             <li className="themePickerContainer">
                                 <select onChange={this.setThemeAndHidePicker} ref={(input) => { this.themePicker = input; }}>
                                     <option onClick={this.closeThemePicker} value="default">Default</option>
-                                    <option onClick={this.closeThemePicker} value="red">Red</option>
-                                    <option onClick={this.closeThemePicker} value="purple">Purple</option>
+                                    <option onClick={this.closeThemePicker} value="pink" >Pink</option>
+                                    <option onClick={this.closeThemePicker} value="orange">Orange</option>
                                     <option onClick={this.closeThemePicker} value="blue">Blue</option>
-                                    <option onClick={this.closeThemePicker} value="black">black</option>
+                                    <option onClick={this.closeThemePicker} value="green">Green</option>
+                                    <option onClick={this.closeThemePicker} value="gray">Gray</option>
                                 </select>
                             </li>
                         </ul>
@@ -274,7 +285,7 @@ class ToDoItems extends React.Component {
         this.state = {
         }
     }
-    
+
     createTasks(item) {
         return (
             <Item isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
@@ -298,7 +309,7 @@ class DoneItems extends React.Component {
         this.state = {
         }
     }
-    
+
     createTasks(item) {
         return (
             <Item isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
@@ -349,7 +360,7 @@ class Item extends React.Component {
     }
     render() {
         return (
-            <li  className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
+            <li className='item' onMouseEnter={this.showHoverItem} onMouseLeave={this.hideHoverItem}>
                 <span>
                     <input checked={this.props.isChecked} type='checkbox' onClick={this.props.handleClick} />
                     <input data={this.props.data} type='text' onKeyUp={this.changeInput} value={this.state.inputValue} />
