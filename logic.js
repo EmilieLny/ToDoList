@@ -312,8 +312,7 @@ class CreateNewList extends React.Component {
         };
         var theme = {
             backgroundColor: this.state.themecolor,
-            color: this.state.themeFontColor,
-
+            color: this.state.themeFontColor
         };
         var gradientFillDoneList = {
             backgroundImage: `linear-gradient(${this.state.gradientFillFirst}, ${this.state.gradientFillSecond})`
@@ -399,7 +398,7 @@ class DoneItems extends React.Component {
 
     createTasks(item) {
         return (
-            <Item isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
+            <Item hideStar={"none"} isChecked={item.isChecked} trashHandleClick={item.deleteFunction} handleClick={item.switchListFunction} key={item.key} data={item.key} text={item.text} />
         )
     }
 
@@ -455,7 +454,7 @@ class Item extends React.Component {
                 <span onClick={this.props.trashHandleClick} className="iconesItem iconCenter" ref={(input) => { this.deletIcon = input; }}>
                     <i className="far fa-trash-alt" ></i>
                 </span>
-                <span onClick={this.props.starClick} className="iconCenter" >
+                <span style={{display:this.props.hideStar}} onClick={this.props.starClick} className="iconCenter" >
                     <i className="far fa-star" ref={(input) => { this.favoritIcon = input; }}></i>
                 </span>
             </li>
