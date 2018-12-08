@@ -36,7 +36,8 @@ class CreateNewList extends React.Component {
             top: 0,
             themeColor: "white",
             themeFontColor: "#57606f",
-            gradientFill: "#eef9f2",
+            gradientFillFirst: "#eef9f2",
+            gradientFillSecond: "white",
             arrayItems: [],
             arrayDoneItems: [],
             somethingIsDone: false,
@@ -150,9 +151,9 @@ class CreateNewList extends React.Component {
             arrayItems: toDoListNewArr,
             arrayDoneItems: newArray
         })
-        if(this.state.arrayDoneItems.length === 1){
+        if (this.state.arrayDoneItems.length === 1) {
             this.setState({
-                somethingIsDone : false,
+                somethingIsDone: false,
             })
         }
     }
@@ -195,31 +196,59 @@ class CreateNewList extends React.Component {
             this.setState({
                 themecolor: "white",
                 themeFontColor: "#57606f",
-                gradientFill: "#eef9f2"
+                gradientFillFirst: "#eef9f2",
+                gradientFillSecond: "white"
             })
+<<<<<<< HEAD
+        } else if (this.themePicker.value === "pink") {
+=======
         } else if (this.themePicker.value === "red") {
+>>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
             this.setState({
-                themecolor: "#ff4757",
-                themeFontColor: "white",
-                gradientFill: "#ff6b81"
+                themecolor: "#ffb5bb",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#ffb5bb"
             })
-        } else if (this.themePicker.value === "purple") {
+        } else if (this.themePicker.value === "orange") {
             this.setState({
-                themecolor: "purple",
-                themeFontColor: "purple",
-                gradientFill: "purple"
+                themecolor: "#ffaf90",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#ffaf90"
             })
+<<<<<<< HEAD
         } else if (this.themePicker.value === "blue") {
+=======
+        } else if (this.themePicker.value === "purple") {
+>>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
             this.setState({
-                themecolor: "blue",
-                themeFontColor: "blue",
-                gradientFill: "blue"
+                themecolor: "#b5cfff",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#b5cfff"
             })
-        } else if (this.themePicker.value === "black") {
+<<<<<<< HEAD
+        } else if (this.themePicker.value === "green") {
+=======
+        } else if (this.themePicker.value === "blue") {
+>>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
             this.setState({
-                themecolor: "black",
-                themeFontColor: "black",
-                gradientFill: "black"
+                themecolor: "#e1f5e8",
+                themeFontColor: "#57606f",
+                gradientFillFirst: "white",
+                gradientFillSecond: "#e1f5e8"
+            })
+<<<<<<< HEAD
+        } else if (this.themePicker.value === "gray") {
+=======
+        } else if (this.themePicker.value === "black") {
+>>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
+            this.setState({
+                themecolor: "#c7c7c7",
+                themeFontColor: "white",
+                gradientFillFirst: "#797979",
+                gradientFillSecond: "#c7c7c7"
             })
         } else {
             alert("something went terribly wrong in code")
@@ -265,7 +294,11 @@ class CreateNewList extends React.Component {
 
         };
         var gradientFillDoneList = {
+<<<<<<< HEAD
+            backgroundImage: `linear-gradient(${this.state.gradientFillFirst}, ${this.state.gradientFillSecond})`
+=======
             backgroundImage: `linear-gradient(${this.state.gradientFill}, white)`
+>>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
         }
         var somethingIsDone = this.state.somethingIsDone ? <div style={gradientFillDoneList} className='doneList'><p><i className="far fa-check-circle"></i> List of Completed tasks</p><DoneItems entries={this.state.arrayDoneItems} /></div> : null;
         return (
@@ -276,13 +309,14 @@ class CreateNewList extends React.Component {
                         <div className="pinIconContainer"><i className="fas fa-map-pin"></i></div>
                     </div>
                     <div className="listItemContainer">
+<<<<<<< HEAD
+                        <div className="plusIconContainer">
+=======
                         <div onClick={this.itemToArrayClick} className="plusIconContainer">
+>>>>>>> 71c51a73ad67f7caf44206159e9a406373b5138b
                             <i className="fas fa-plus"></i>
                         </div>
                         <input ref={(input) => { this.textItem = input; }} onKeyUp={this.itemToArray} className="listItemInput" placeholder="List item" type="text"></input>
-                        {/* <div className="editIconContainer">
-                            <i className="fas fa-edit"></i>
-                        </div> */}
                     </div>
                     <ToDoItems entries={this.state.arrayItems} />
                     {somethingIsDone}
@@ -304,10 +338,11 @@ class CreateNewList extends React.Component {
                             <li className="themePickerContainer">
                                 <select onChange={this.setThemeAndHidePicker} ref={(input) => { this.themePicker = input; }}>
                                     <option onClick={this.closeThemePicker} value="default">Default</option>
-                                    <option onClick={this.closeThemePicker} value="red">Red</option>
-                                    <option onClick={this.closeThemePicker} value="purple">Purple</option>
+                                    <option onClick={this.closeThemePicker} value="pink" >Pink</option>
+                                    <option onClick={this.closeThemePicker} value="orange">Orange</option>
                                     <option onClick={this.closeThemePicker} value="blue">Blue</option>
-                                    <option onClick={this.closeThemePicker} value="black">black</option>
+                                    <option onClick={this.closeThemePicker} value="green">Green</option>
+                                    <option onClick={this.closeThemePicker} value="gray">Gray</option>
                                 </select>
                             </li>
                         </ul>
